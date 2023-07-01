@@ -1,17 +1,14 @@
-# 配置端口
-server:
-  port: 8080
-
+# Spring配置
 spring:
   application:
     name: canal-client
   datasource:
-    #1.JDBC
+    # druid
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=GMT%2B8
     username: root
-    password: lizhenjun123!
+    password: root
     druid:
       #2.连接池配置
       #初始化连接池的连接数量 大小，最小，最大
@@ -56,10 +53,27 @@ spring:
   jooq:
     sql-dialect: mysql
 
+server:
+  # 服务器的HTTP端口，默认为8080
+  port: 8080
+  servlet:
+    # 应用的访问路径
+    context-path: /canal-client
+  undertow:
+    threads:
+      # IO线程数
+      io: 4
+      # 阻塞任务线程池数
+      worker: 125
+    # 每块buffer的空间大小
+    buffer-size: 512
+    # 是否分配的直接内存
+    direct-buffers: true
+
 # canal 服务端配置
 canal:
   mode: simple
-  server: 43.138.208.23:11111
+  server: 192.168.0.1:11111
   destination: example
   batchSize: 100
 
