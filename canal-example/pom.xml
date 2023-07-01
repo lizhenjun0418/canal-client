@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>canal</artifactId>
@@ -16,6 +15,10 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
         <spring-boot.version>2.7.1</spring-boot.version>
+        <canal.version>1.0.0-RELEASE</canal.version>
+        <mysql.version>8.0.33</mysql.version>
+        <jooq.version>3.14.16</jooq.version>
+        <druid.version>1.2.18</druid.version>
     </properties>
 
     <dependencies>
@@ -27,11 +30,6 @@
             <scope>import</scope>
         </dependency>
 
-        <dependency>
-            <groupId>com.lizhenjun</groupId>
-            <artifactId>canal-spring-boot-starter</artifactId>
-            <version>1.0.0-RELEASE</version>
-        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -49,26 +47,32 @@
         </dependency>
 
         <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.33</version>
-        </dependency>
-
-        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jooq</artifactId>
         </dependency>
 
         <dependency>
+            <groupId>com.lizhenjun</groupId>
+            <artifactId>canal-spring-boot-starter</artifactId>
+            <version>${canal.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql.version}</version>
+        </dependency>
+
+        <!--<dependency>
             <groupId>org.jooq</groupId>
             <artifactId>jooq</artifactId>
-            <version>3.14.16</version>
-        </dependency>
+            <version>${jooq.version}</version>
+        </dependency>-->
 
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid-spring-boot-starter</artifactId>
-            <version>1.2.18</version>
+            <version>${druid.version}</version>
         </dependency>
     </dependencies>
 
