@@ -1,17 +1,16 @@
-[![Build Status](https://travis-ci.org/NormanGyllenhaal/canal-client.svg?branch=master)](https://travis-ci.org/NormanGyllenhaal/canal-client)
-
-## canal 客户端 canal client
+## 一、canal 客户端 canal client
 
 ### 介绍
 
-canal 是阿里巴巴mysql数据库binlog的增量订阅&消费组件  
-使用该客户端前请先了解canal,https://github.com/alibaba/canal  
-canal 自身提供了简单的客户端，如果要转换为数据库的实体对象，处理消费数据要每次进行对象转换。
-该客户端直接将canal的数据原始类型转换为各个数据表的实体对象，并解耦数据的增删改操作，方便给业务使用。
+* Canal是阿里巴巴mysql数据库binlog的增量订阅&消费组件  
+* 使用该客户端前请先了解Canal, https://github.com/alibaba/canal  
+* Canal 自身提供了简单的客户端，如果要转换为数据库的实体对象，处理消费数据要每次进行对象转换。
+* 该客户端直接将Canal的数据原始类型转换为各个数据表的实体对象，并解耦数据的增删改操作，方便给业务使用。
+* 在使用该客户端前，需要先部署好Canal-server端，具体部署步骤请参考[Canal服务端部署](<#canan_server>)。
 
 ### 要求
 
-java8+
+* java8+
 
 ### 特性
 
@@ -81,8 +80,8 @@ public class UserHandler implements EntryHandler<User>{
 public class UserHandler implements EntryHandler<User>{
 
    /**
-   *  新增操作
-   * @param user
+    *  新增操作
+    * @param user
     */
    @Override
     public void insert(User user) {
@@ -90,9 +89,9 @@ public class UserHandler implements EntryHandler<User>{
         log.info("新增 {}",user);
     }
     /**
-    * 对于更新操作来讲，before 中的属性只包含变更的属性，after 包含所有属性，通过对比可发现那些属性更新了
-   * @param before
-   * @param after
+     * 对于更新操作来讲，before 中的属性只包含变更的属性，after 包含所有属性，通过对比可发现那些属性更新了
+     * @param before
+     * @param after
     */
     @Override
     public void update(User before, User after) {
@@ -108,6 +107,15 @@ public class UserHandler implements EntryHandler<User>{
        //你的逻辑
         log.info("删除 {}",user); 
    }
+
+    /**
+     * ddl语句执行
+     * @Param sql
+     * @Return void
+     */
+    default void ddl(String sql) {
+        log.info("ddl sql {}",sql);
+    }
 }
 ```
 
@@ -117,21 +125,44 @@ public class UserHandler implements EntryHandler<User>{
 @CanalTable(value = "all")
 @Component
 public class DefaultEntryHandler implements EntryHandler<Map<String, String>> {
+
+    /**
+     *  新增操作
+     * @param map
+     */
      @Override
-        public void insert(Map<String, String> map) {
-            logger.info("insert message  {}", map);
-        }
-    
-        @Override
-        public void update(Map<String, String> before, Map<String, String> after) {
-            logger.info("update before {} ", before);
-            logger.info("update after {}", after);
-        }
-    
-        @Override
-        public void delete(Map<String, String> map) {
-            logger.info("delete  {}", map);
-        }
+     public void insert(Map<String, String> map) {
+         logger.info("insert message  {}", map);
+     }
+
+    /**
+     * 对于更新操作来讲，before 中的属性只包含变更的属性，after 包含所有属性，通过对比可发现那些属性更新了
+     * @param before
+     * @param after
+     */
+     @Override
+     public void update(Map<String, String> before, Map<String, String> after) {
+         logger.info("update before {} ", before);
+         logger.info("update after {}", after);
+     }
+
+    /**
+     *  删除操作
+     * @param map
+     */
+     @Override
+     public void delete(Map<String, String> map) {
+         logger.info("delete  {}", map);
+     }
+     
+    /**
+     * ddl语句执行
+     * @Param sql
+     * @Return void
+     */
+    default void ddl(String sql) {
+        log.info("ddl sql {}",sql);
+    }
 }
 ```
 
@@ -142,9 +173,9 @@ CanalModel canal = CanalContext.getModel();
 ```
 
 具体使用可以查询项目demo 示例  
-https://github.com/NormanGyllenhaal/canal-client/tree/master/canal-example
+https://github.com/lizhenjun0418/canal-client/tree/main/canal-example
 
-### canal服务端部署
+### 二、<a id="canan_server">Canal服务端部署</a>
 
 #### 1.配置mysql，开启binlog功能
 * 开启mysql的binlog功能，并配置binlog模式为row。
@@ -199,6 +230,19 @@ canal.instance.filter.regex = canal_test\\..*
 
 #################################################
 ```
+
+* 设置table filter规则方式为：
+```html
+mysql 数据解析关注的表，Perl正则表达式.
+多个正则之间以逗号(,)分隔，转义符需要双斜杠(\\) 
+常见例子：
+1.  所有表：.*   or  .*\\..*
+2.  canal schema下所有表： canal\\..*
+3.  canal下的以canal打头的表：canal\\.canal.*
+4.  canal schema下的一张表：canal.test1
+5.  多个规则组合使用：canal\\..*,mysql.test1,mysql.test2 (逗号分隔)
+```
+
 * 启动： /data/canal-server/bin/startup.sh
 * 验证启动状态，查看log文件: vim canal/log/canal/canal.log
 ```html

@@ -11,18 +11,19 @@ import com.lizhenjun.canal.client.handler.impl.RowDataHandlerImpl;
 import com.lizhenjun.canal.client.handler.impl.SyncMessageHandlerImpl;
 import com.lizhenjun.canal.client.spring.boot.properties.CanalProperties;
 import com.lizhenjun.canal.client.spring.boot.properties.CanalSimpleProperties;
+import com.lizhenjun.canal.client.spring.boot.properties.ThreadPoolProperties;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import java.util.List;
-import java.util.concurrent.ExecutorService;
 
 @Configuration
-@EnableConfigurationProperties(CanalSimpleProperties.class)
+@EnableConfigurationProperties({CanalSimpleProperties.class, ThreadPoolProperties.class})
 @ConditionalOnBean(value = {EntryHandler.class})
 @ConditionalOnProperty(value = CanalProperties.CANAL_MODE, havingValue = "simple", matchIfMissing = true)
 @Import(ThreadPoolAutoConfiguration.class)
@@ -42,8 +43,8 @@ public class SimpleClientAutoConfiguration {
     @Bean
     @ConditionalOnProperty(value = CanalProperties.CANAL_ASYNC, havingValue = "true", matchIfMissing = true)
     public MessageHandler messageHandler(RowDataHandler<CanalEntry.RowData> rowDataHandler, List<EntryHandler> entryHandlers,
-                                         ExecutorService executorService) {
-        return new AsyncMessageHandlerImpl(entryHandlers, rowDataHandler, executorService);
+                                         ThreadPoolTaskExecutor threadPoolTaskExecutor) {
+        return new AsyncMessageHandlerImpl(entryHandlers, rowDataHandler, threadPoolTaskExecutor);
     }
 
     @Bean
@@ -69,5 +70,4 @@ public class SimpleClientAutoConfiguration {
                 .unit(canalSimpleProperties.getUnit())
                 .build();
     }
-
 }

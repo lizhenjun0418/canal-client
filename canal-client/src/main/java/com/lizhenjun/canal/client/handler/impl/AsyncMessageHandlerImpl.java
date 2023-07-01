@@ -5,9 +5,9 @@ import com.alibaba.otter.canal.protocol.Message;
 import com.lizhenjun.canal.client.handler.AbstractMessageHandler;
 import com.lizhenjun.canal.client.handler.EntryHandler;
 import com.lizhenjun.canal.client.handler.RowDataHandler;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import java.util.List;
-import java.util.concurrent.ExecutorService;
 
 /**
  * @Description: 异步数据处理
@@ -16,15 +16,15 @@ import java.util.concurrent.ExecutorService;
  */
 public class AsyncMessageHandlerImpl extends AbstractMessageHandler {
 
-    private ExecutorService executor;
+    private ThreadPoolTaskExecutor threadPoolTaskExecutor;
 
-    public AsyncMessageHandlerImpl(List<? extends EntryHandler> entryHandlers, RowDataHandler<CanalEntry.RowData> rowDataHandler, ExecutorService executor) {
+    public AsyncMessageHandlerImpl(List<? extends EntryHandler> entryHandlers, RowDataHandler<CanalEntry.RowData> rowDataHandler, ThreadPoolTaskExecutor threadPoolTaskExecutor) {
         super(entryHandlers, rowDataHandler);
-        this.executor = executor;
+        this.threadPoolTaskExecutor = threadPoolTaskExecutor;
     }
 
     @Override
     public void handleMessage(Message message) {
-        executor.execute(() -> super.handleMessage(message));
+        threadPoolTaskExecutor.execute(() -> super.handleMessage(message));
     }
 }

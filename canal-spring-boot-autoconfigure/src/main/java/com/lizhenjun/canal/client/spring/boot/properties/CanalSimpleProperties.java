@@ -2,10 +2,8 @@ package com.lizhenjun.canal.client.spring.boot.properties;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-
 @ConfigurationProperties(prefix = CanalSimpleProperties.CANAL_PREFIX)
 public class CanalSimpleProperties extends CanalProperties {
-
 
     private String userName;
 
@@ -27,6 +25,5 @@ public class CanalSimpleProperties extends CanalProperties {
     public void setPassword(String password) {
         this.password = password;
     }
-
 
 }

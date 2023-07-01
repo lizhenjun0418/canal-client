@@ -1,9 +1,9 @@
-package top.javatool.canal.example.controller;
+package com.lizhenjun.canal.example.controller;
 
+import com.lizhenjun.canal.example.service.IUserService;
 import org.springframework.web.bind.annotation.*;
-import top.javatool.canal.example.domin.User;
-import top.javatool.canal.example.dto.R;
-import top.javatool.canal.example.service.IUserService;
+import com.lizhenjun.canal.example.domin.User;
+import com.lizhenjun.canal.example.dto.R;
 
 import javax.annotation.Resource;
 

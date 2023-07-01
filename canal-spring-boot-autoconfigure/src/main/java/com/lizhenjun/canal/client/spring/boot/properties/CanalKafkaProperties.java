@@ -6,11 +6,9 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = CanalSimpleProperties.CANAL_PREFIX)
 public class CanalKafkaProperties extends CanalProperties {
 
-
     private Integer partition;
 
     private String groupId;
-
 
     public Integer getPartition() {
         return partition;

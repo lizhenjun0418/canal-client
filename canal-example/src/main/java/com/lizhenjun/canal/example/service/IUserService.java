@@ -1,7 +1,6 @@
-package top.javatool.canal.example.service;
+package com.lizhenjun.canal.example.service;
 
-
-import top.javatool.canal.example.domin.User;
+import com.lizhenjun.canal.example.domin.User;
 
 public interface IUserService {
 

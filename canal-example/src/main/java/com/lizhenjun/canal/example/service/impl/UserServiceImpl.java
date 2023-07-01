@@ -1,13 +1,13 @@
-package top.javatool.canal.example.service.impl;
+package com.lizhenjun.canal.example.service.impl;
 
 import com.alibaba.fastjson2.JSON;
+import com.lizhenjun.canal.example.service.IUserService;
 import org.jooq.DSLContext;
 import org.jooq.Field;
 import org.jooq.Param;
 import org.jooq.impl.DSL;
 import org.springframework.stereotype.Service;
-import top.javatool.canal.example.domin.User;
-import top.javatool.canal.example.service.IUserService;
+import com.lizhenjun.canal.example.domin.User;
 
 import javax.annotation.Resource;
 import java.util.HashMap;

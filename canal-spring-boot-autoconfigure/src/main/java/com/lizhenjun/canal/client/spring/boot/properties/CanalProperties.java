@@ -6,12 +6,9 @@ import java.util.concurrent.TimeUnit;
 
 public class CanalProperties {
 
-
     public static final String CANAL_PREFIX = "canal";
 
-
     public static final String CANAL_ASYNC = CANAL_PREFIX + "." + "async";
-
 
     public static final String CANAL_MODE = CANAL_PREFIX + "." + "mode";
 
@@ -20,15 +17,11 @@ public class CanalProperties {
      */
     private String mode;
 
-
     private Boolean async;
-
 
     private String server;
 
-
     private String destination;
-
 
     private String filter = StringUtils.EMPTY;
 
@@ -37,7 +30,6 @@ public class CanalProperties {
     private Long timeout = 1L;
 
     private TimeUnit unit = TimeUnit.SECONDS;
-
 
     public Boolean getAsync() {
         return async;
