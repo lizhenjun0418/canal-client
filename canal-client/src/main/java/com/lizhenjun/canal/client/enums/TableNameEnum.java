@@ -1,8 +1,9 @@
 package com.lizhenjun.canal.client.enums;
 
 /**
- * @author yang peng
- * @date 2019/4/1915:20
+ * @Description: table枚举
+ * @Author: lizhenjun
+ * @Date: 2023/7/1 17:27
  */
 public enum TableNameEnum {
 

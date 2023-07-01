@@ -1,8 +1,9 @@
 package com.lizhenjun.canal.client.model;
 
 /**
- * @author yang peng
- * @date 2019/3/2711:21
+ * @Description: 
+ * @Author: lizhenjun
+ * @Date: 2023/7/1 14:03
  */
 public class CanalModel {
 

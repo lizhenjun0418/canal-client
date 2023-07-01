@@ -5,8 +5,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * @author yang peng
- * @date 2019/4/117:29
+ * @Description: Canal线程异常处理
+ * @Author: lizhenjun
+ * @Date: 2023/7/1 14:27
  */
 @Slf4j
 public class CanalThreadUncaughtExceptionHandler implements Thread.UncaughtExceptionHandler {

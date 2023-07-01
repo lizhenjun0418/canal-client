@@ -1,10 +1,17 @@
 package com.lizhenjun.canal.client.handler;
 
 /**
- * @author yang peng
- * @date 2019/3/2622:06
+ * @Description: 单表消息处理接口
+ * @Author: lizhenjun
+ * @Date: 2023/7/1 14:21
  */
 public interface MessageHandler<T> {
 
+    /**
+     * 
+     * @Param t 
+     * @return: 
+ * @Return void
+     */
     void handleMessage(T t);
 }

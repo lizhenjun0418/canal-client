@@ -14,6 +14,8 @@ public class FieldUtil {
         field.setAccessible(true);
         Class<?> type = field.getType();
         Object result = StringConvertUtil.convertType(type, value);
-        field.set(object, result);
+        if(null != result) {
+            field.set(object, result);
+        }
     }
 }

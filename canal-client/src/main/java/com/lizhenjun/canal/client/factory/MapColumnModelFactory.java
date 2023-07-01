@@ -6,6 +6,11 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.util.Map;
 
+/**
+ * @Description: 
+ * @Author: lizhenjun
+ * @Date: 2023/7/1 15:36
+ */
 public class MapColumnModelFactory extends AbstractModelFactory<Map<String, String>> {
 
     @Override

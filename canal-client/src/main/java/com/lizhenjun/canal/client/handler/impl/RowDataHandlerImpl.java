@@ -12,8 +12,9 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * @author yang peng
- * @date 2019/3/2917:21
+ * @Description: 单条数据处理
+ * @Author: lizhenjun
+ * @Date: 2023/7/1 15:42
  */
 @Slf4j
 public class RowDataHandlerImpl implements RowDataHandler<CanalEntry.RowData> {
@@ -26,7 +27,8 @@ public class RowDataHandlerImpl implements RowDataHandler<CanalEntry.RowData> {
 
     @Override
     public <R> void handlerRowData(CanalEntry.RowData rowData, EntryHandler<R> entryHandler, CanalEntry.EventType eventType) throws Exception {
-        if (entryHandler == null) {
+        log.info("RowDataHandlerImpl-处理消息 [{}]", rowData);
+        if (null == entryHandler) {
             return;
         }
         switch (eventType) {

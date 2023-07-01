@@ -1,6 +1,5 @@
 package com.lizhenjun.canal.client.spring.boot.autoconfigure;
 
-
 import com.alibaba.otter.canal.protocol.CanalEntry;
 import com.lizhenjun.canal.client.client.SimpleCanalClient;
 import com.lizhenjun.canal.client.factory.EntryColumnModelFactory;
@@ -29,14 +28,11 @@ import java.util.concurrent.ExecutorService;
 @Import(ThreadPoolAutoConfiguration.class)
 public class SimpleClientAutoConfiguration {
 
-
     private CanalSimpleProperties canalSimpleProperties;
-
 
     public SimpleClientAutoConfiguration(CanalSimpleProperties canalSimpleProperties) {
         this.canalSimpleProperties = canalSimpleProperties;
     }
-
 
     @Bean
     public RowDataHandler<CanalEntry.RowData> rowDataHandler() {
@@ -50,13 +46,11 @@ public class SimpleClientAutoConfiguration {
         return new AsyncMessageHandlerImpl(entryHandlers, rowDataHandler, executorService);
     }
 
-
     @Bean
     @ConditionalOnProperty(value = CanalProperties.CANAL_ASYNC, havingValue = "false")
     public MessageHandler messageHandler(RowDataHandler<CanalEntry.RowData> rowDataHandler, List<EntryHandler> entryHandlers) {
         return new SyncMessageHandlerImpl(entryHandlers, rowDataHandler);
     }
-
 
     @Bean(initMethod = "start", destroyMethod = "stop")
     public SimpleCanalClient simpleCanalClient(MessageHandler messageHandler) {

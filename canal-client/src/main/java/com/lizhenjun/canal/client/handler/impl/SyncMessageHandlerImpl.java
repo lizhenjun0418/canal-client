@@ -9,8 +9,9 @@ import com.lizhenjun.canal.client.handler.RowDataHandler;
 import java.util.List;
 
 /**
- * @author yang peng
- * @date 2019/3/2710:52
+ * @Description: 异步数据处理
+ * @Author: lizhenjun
+ * @Date: 2023/7/1 17:26
  */
 public class SyncMessageHandlerImpl extends AbstractMessageHandler {
 

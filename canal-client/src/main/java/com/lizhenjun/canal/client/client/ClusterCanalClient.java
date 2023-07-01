@@ -11,6 +11,11 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * @Description: 集群客户端
+ * @Author: lizhenjun
+ * @Date: 2023/7/1 17:31
+ */
 public class ClusterCanalClient extends AbstractCanalClient {
 
 

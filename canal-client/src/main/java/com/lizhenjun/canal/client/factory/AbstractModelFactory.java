@@ -5,6 +5,11 @@ import com.lizhenjun.canal.client.handler.EntryHandler;
 import com.lizhenjun.canal.client.util.GenericUtil;
 import com.lizhenjun.canal.client.util.HandlerUtil;
 
+/**
+ * @Description: 
+ * @Author: lizhenjun
+ * @Date: 2023/7/1 15:46
+ */
 public abstract class AbstractModelFactory<T> implements IModelFactory<T> {
 
     @Override

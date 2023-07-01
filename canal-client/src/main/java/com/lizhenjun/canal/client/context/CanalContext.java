@@ -4,8 +4,9 @@ package com.lizhenjun.canal.client.context;
 import com.lizhenjun.canal.client.model.CanalModel;
 
 /**
- * @author yang peng
- * @date 2019/3/2711:17
+ * @Description: canal上下文
+ * @Author: lizhenjun
+ * @Date: 2023/7/1 17:27
  */
 public class CanalContext {
     private static ThreadLocal<CanalModel> threadLocal = new ThreadLocal<>();

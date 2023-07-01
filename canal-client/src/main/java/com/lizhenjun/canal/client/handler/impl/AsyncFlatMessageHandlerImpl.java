@@ -11,6 +11,11 @@ import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.ThreadPoolExecutor;
 
+/**
+ * @Description: 异步扁平化数据处理
+ * @Author: lizhenjun
+ * @Date: 2023/7/1 15:32
+ */
 @Slf4j
 public class AsyncFlatMessageHandlerImpl extends AbstractFlatMessageHandler {
 

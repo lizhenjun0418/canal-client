@@ -11,10 +11,10 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @author yang peng
- * @date 2019/3/2910:02
+ * @Description: kafka客户端
+ * @Author: lizhenjun
+ * @Date: 2023/7/1 17:30
  */
-
 public class KafkaCanalClient extends AbstractCanalClient {
 
     private Logger log = LoggerFactory.getLogger(KafkaCanalClient.class);

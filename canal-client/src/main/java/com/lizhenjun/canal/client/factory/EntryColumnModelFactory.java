@@ -11,12 +11,14 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * @author yang peng
- * @date 2019/3/2916:16
+ * @Description: 
+ * @Author: lizhenjun
+ * @Date: 2023/7/1 15:36
  */
 public class EntryColumnModelFactory extends AbstractModelFactory<List<CanalEntry.Column>> {
 
@@ -24,7 +26,8 @@ public class EntryColumnModelFactory extends AbstractModelFactory<List<CanalEntr
     public <R> R newInstance(EntryHandler entryHandler, List<CanalEntry.Column> columns) throws Exception {
         String canalTableName = HandlerUtil.getCanalTableName(entryHandler);
         if (TableNameEnum.ALL.name().equalsIgnoreCase(canalTableName)) {
-            Map<String, String> map = columns.stream().collect(Collectors.toMap(CanalEntry.Column::getName, CanalEntry.Column::getValue));
+            Map<String, String> map = columns.stream().filter(CanalEntry.Column::hasValue)
+                    .collect(Collectors.toMap(CanalEntry.Column::getName, CanalEntry.Column::getValue));
             return (R) map;
         }
         Class<R> tableClass = GenericUtil.getTableClass(entryHandler);
@@ -38,7 +41,8 @@ public class EntryColumnModelFactory extends AbstractModelFactory<List<CanalEntr
     public <R> R newInstance(EntryHandler entryHandler, List<CanalEntry.Column> columns, Set<String> updateColumn) throws Exception {
         String canalTableName = HandlerUtil.getCanalTableName(entryHandler);
         if (TableNameEnum.ALL.name().equalsIgnoreCase(canalTableName)) {
-            Map<String, String> map = columns.stream().filter(column -> updateColumn.contains(column.getName()))
+            Map<String, String> map = columns.stream()
+                    .filter(column -> column.hasValue() && updateColumn.contains(column.getName()))
                     .collect(Collectors.toMap(CanalEntry.Column::getName, CanalEntry.Column::getValue));
             return (R) map;
         }

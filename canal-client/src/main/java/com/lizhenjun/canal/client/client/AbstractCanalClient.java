@@ -10,30 +10,45 @@ import org.slf4j.LoggerFactory;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @author yang peng
- * @date 2019/3/2619:11
+ * @Description: Canal启动入口
+ * @Author: lizhenjun
+ * @Date: 2023/7/1 13:58
  */
-
 public abstract class AbstractCanalClient implements CanalClient {
 
     protected volatile boolean flag;
-
-    private Logger log = LoggerFactory.getLogger(AbstractCanalClient.class);
 
     private Thread workThread;
 
     private CanalConnector connector;
 
+    /**
+     * 监听表规，如果canal-server设置了监听规则，这里就不要设置，否则会覆盖服务端的规则
+     */
     protected String filter = StringUtils.EMPTY;
 
+    /**
+     * 获取指定数量的数据
+     */
     protected Integer batchSize = 1;
-
+    /**
+     * 超时时间，单位秒
+     */
     protected Long timeout = 1L;
 
     protected TimeUnit unit = TimeUnit.SECONDS;
 
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
+
+    /**
+     * 消息处理器
+     */
     private MessageHandler messageHandler;
 
+    /**
+     * 启动监听
+     * @Return void
+     */
     @Override
     public void start() {
         log.info("start canal client");
@@ -43,6 +58,10 @@ public abstract class AbstractCanalClient implements CanalClient {
         workThread.start();
     }
 
+    /**
+     * 停止监听
+     * @Return void
+     */
     @Override
     public void stop() {
         log.info("stop canal client");
@@ -52,6 +71,10 @@ public abstract class AbstractCanalClient implements CanalClient {
         }
     }
 
+    /**
+     * 消息处理
+     * @Return void
+     */
     @Override
     public void process() {
         while (flag) {
@@ -67,29 +90,23 @@ public abstract class AbstractCanalClient implements CanalClient {
                     }
                     connector.ack(batchId);
                 }
-            } catch (Exception e) {
-                log.error("canal client 异常", e);
             } finally {
                 connector.disconnect();
             }
         }
     }
 
-
     public void setConnector(CanalConnector connector) {
         this.connector = connector;
     }
-
 
     public void setMessageHandler(MessageHandler messageHandler) {
         this.messageHandler = messageHandler;
     }
 
-
     public CanalConnector getConnector() {
         return connector;
     }
-
 
     public MessageHandler getMessageHandler() {
         return messageHandler;

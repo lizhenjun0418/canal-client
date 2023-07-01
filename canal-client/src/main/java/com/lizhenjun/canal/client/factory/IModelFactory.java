@@ -5,8 +5,9 @@ import com.lizhenjun.canal.client.handler.EntryHandler;
 import java.util.Set;
 
 /**
- * @author yang peng
- * @date 2019/3/2916:45
+ * @Description:
+ * @Author: lizhenjun
+ * @Date: 2023/7/1 15:32
  */
 public interface IModelFactory<T> {
 

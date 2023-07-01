@@ -4,6 +4,8 @@ package com.lizhenjun.canal.client.util;
 import com.lizhenjun.canal.client.annotation.CanalTable;
 import com.lizhenjun.canal.client.enums.TableNameEnum;
 import com.lizhenjun.canal.client.handler.EntryHandler;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.Collections;
 import java.util.List;
@@ -11,8 +13,9 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * @author yang peng
- * @date 2019/3/2713:33
+ * @Description: 
+ * @Author: lizhenjun
+ * @Date: 2023/7/1 14:50
  */
 public class HandlerUtil {
 
@@ -20,59 +23,55 @@ public class HandlerUtil {
         EntryHandler globalHandler = null;
         for (EntryHandler handler : entryHandlers) {
             String canalTableName = getCanalTableName(handler);
-            if (TableNameEnum.ALL.name().toLowerCase().equals(canalTableName)) {
+            if (TableNameEnum.ALL.name().equalsIgnoreCase(canalTableName)) {
                 globalHandler = handler;
                 continue;
             }
-            if (tableName.equals(canalTableName)) {
+            if (StringUtils.equalsIgnoreCase(tableName, canalTableName)) {
                 return handler;
             }
             String name = GenericUtil.getTableGenericProperties(handler);
-            if (name != null) {
-                if (name.equals(tableName)) {
-                    return handler;
-                }
+            if (StringUtils.equalsIgnoreCase(name, tableName)) {
+                return handler;
             }
         }
         return globalHandler;
     }
 
-
     public static Map<String, EntryHandler> getTableHandlerMap(List<? extends EntryHandler> entryHandlers) {
-        Map<String, EntryHandler> map = new ConcurrentHashMap<>();
-        if (entryHandlers == null || entryHandlers.isEmpty()) {
+        if (CollectionUtils.isEmpty(entryHandlers)) {
             return Collections.emptyMap();
         }
+        Map<String, EntryHandler> map = new ConcurrentHashMap<>();
         for (EntryHandler handler : entryHandlers) {
             String canalTableName = getCanalTableName(handler);
             if (canalTableName != null) {
                 map.putIfAbsent(canalTableName.toLowerCase(), handler);
-            } else {
-                String name = GenericUtil.getTableGenericProperties(handler);
-                if (name != null) {
-                    map.putIfAbsent(name.toLowerCase(), handler);
-                }
+                continue;
+            }
+            String name = GenericUtil.getTableGenericProperties(handler);
+            if (name != null) {
+                map.putIfAbsent(name.toLowerCase(), handler);
             }
         }
         return map;
     }
 
-
     public static EntryHandler getEntryHandler(Map<String, EntryHandler> map, String tableName) {
         EntryHandler entryHandler = map.get(tableName);
-        if (entryHandler == null) {
-            return map.get(TableNameEnum.ALL.name().toLowerCase());
+        if (null == entryHandler) {
+            entryHandler = map.get(TableNameEnum.ALL.name().toLowerCase());
         }
         return entryHandler;
     }
-
-
+    
+    /**
+     * 获取Handler CanalTable注解的value值（数据库表名）
+     * @Param entryHandler
+     * @Return java.lang.String
+     */
     public static String getCanalTableName(EntryHandler entryHandler) {
         CanalTable canalTable = entryHandler.getClass().getAnnotation(CanalTable.class);
-        if (canalTable != null) {
-            return canalTable.value();
-        }
-        return null;
+        return null == canalTable ? null : canalTable.value();
     }
-
 }

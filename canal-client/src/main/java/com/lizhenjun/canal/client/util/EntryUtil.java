@@ -13,8 +13,9 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 /**
- * @author yang peng
- * @date 2019/3/2915:07
+ * @Description: 实体工具类
+ * @Author: lizhenjun
+ * @Date: 2023/7/1 15:27
  */
 public class EntryUtil {
 
@@ -40,12 +41,21 @@ public class EntryUtil {
         return map;
     }
 
-
+    /**
+     * 获取Column注解名字
+     * @Param field
+     * @Return java.lang.String
+     */
     private static String getColumnName(Field field) {
         Column annotation = field.getAnnotation(Column.class);
         return annotation != null ? annotation.name() : CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, field.getName());
     }
 
+    /**
+     * 判断该字段是否参与序列化
+     * @Param field
+     * @Return boolean
+     */
     private static boolean notTransient(Field field) {
         Transient annotation = field.getAnnotation(Transient.class);
         return annotation == null;

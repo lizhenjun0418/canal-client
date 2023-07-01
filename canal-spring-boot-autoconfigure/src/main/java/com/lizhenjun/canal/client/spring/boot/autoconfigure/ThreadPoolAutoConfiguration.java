@@ -14,7 +14,6 @@ import java.util.concurrent.Executors;
 @ConditionalOnProperty(value = CanalProperties.CANAL_ASYNC, havingValue = "true", matchIfMissing = true)
 public class ThreadPoolAutoConfiguration {
 
-
     @Bean(destroyMethod = "shutdown")
     public ExecutorService executorService() {
         BasicThreadFactory factory = new BasicThreadFactory.Builder()
