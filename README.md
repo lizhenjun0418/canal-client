@@ -173,7 +173,7 @@ CanalModel canal = CanalContext.getModel();
 ```
 
 具体使用可以查询项目demo 示例  
-https://github.com/lizhenjun0418/canal-client/tree/main/canal-example
+https://github.com/lizhenjun0418/canal-client-example.git
 
 ### 二、<a id="canan_server">Canal服务端部署</a>
 
