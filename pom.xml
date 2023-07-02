@@ -10,7 +10,7 @@
     <version>1.0.0-RELEASE</version>
 
     <name>canal</name>
-    <description>easy canal client</description>
+    <description>canal client</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
